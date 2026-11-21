@@ -1,0 +1,4 @@
+services:
+  hermes:
+    ports:
+      - "127.0.0.1:${HERMES_HOST_PORT:?Defina HERMES_HOST_PORT no arquivo da instância}:9119"

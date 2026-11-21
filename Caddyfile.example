@@ -1,0 +1,10 @@
+hermes.exemplo.com {
+	reverse_proxy 127.0.0.1:19119
+}
+
+hermes-equipe.exemplo.com {
+	reverse_proxy 127.0.0.1:19120
+}
+
+# Se o Caddy roda em Docker, substitua os endereços acima pelos aliases
+# hermes-lincoln-dashboard:9119 e hermes-equipe-dashboard:9119.

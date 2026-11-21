@@ -1,0 +1,12 @@
+services:
+  hermes:
+    networks:
+      default:
+      caddy:
+        aliases:
+          - ${HERMES_INSTANCE:?Defina HERMES_INSTANCE no arquivo da instância}-dashboard
+
+networks:
+  caddy:
+    external: true
+    name: ${CADDY_NETWORK:?Defina CADDY_NETWORK com o nome da rede Docker do Caddy}

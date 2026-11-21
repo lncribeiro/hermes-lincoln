@@ -1,0 +1,31 @@
+name: ${HERMES_INSTANCE:?Defina HERMES_INSTANCE no arquivo da instância}
+
+services:
+  hermes:
+    image: ${HERMES_IMAGE:-docker.io/nousresearch/hermes-agent@sha256:3e9fe4c6ef36490f43aa0d0d80f9df64e9c92a576eee3042f1a97c8813c05355}
+    command: ["gateway", "run"]
+    restart: unless-stopped
+    stop_grace_period: 30s
+    environment:
+      HERMES_DASHBOARD: "1"
+      HERMES_DASHBOARD_HOST: "0.0.0.0"
+      HERMES_DASHBOARD_PORT: "9119"
+      HERMES_DASHBOARD_PUBLIC_URL: ${HERMES_PUBLIC_URL:?Defina HERMES_PUBLIC_URL no arquivo da instância}
+      HERMES_DASHBOARD_BASIC_AUTH_USERNAME: ${HERMES_DASHBOARD_USER:-admin}
+      HERMES_DASHBOARD_BASIC_AUTH_PASSWORD: ${HERMES_DASHBOARD_PASSWORD:?Defina HERMES_DASHBOARD_PASSWORD no arquivo da instância}
+    volumes:
+      - data:/opt/data
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "--max-time", "5", "http://127.0.0.1:9119/api/status"]
+      interval: 30s
+      timeout: 6s
+      retries: 3
+      start_period: 60s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  data:
